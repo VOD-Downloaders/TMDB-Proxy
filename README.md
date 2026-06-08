@@ -5,7 +5,7 @@ Any request is forwarded to TMDB using the same path and query string, with your
 
 ## Features
 
-- Proxies the **entire** TMDB read API
+- Proxies some of **movies** and **series** TMDB read API
 - Easy **Vercel** deployment
 - Your **API Keys** stay secure (server-side)
 
