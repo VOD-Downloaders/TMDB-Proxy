@@ -49,7 +49,7 @@ A lightweight node app to proxy the [TMDB API](https://developer.themoviedb.org/
 
 3. Add the environment variables:
     - `TMDB_API_KEY`
-    - `TMDB_READ_ACCESS_TOKEN`
+    - `TMDB_READ_ACCESS_TOKEN`  
     under **Vercel** -> **Settings** -> **Environment Variables**
 
 4. Deploy!
