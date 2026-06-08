@@ -15,12 +15,82 @@ const app = express();
 app.use(cors());
 
 /////////////////////////////////////////////////////
+// Helpers
+/////////////////////////////////////////////////////
+async function proxyTmdb(res, path, params = {}) {
+	if (!TMDB_READ_ACCESS_TOKEN) {
+		return res
+			.status(500)
+			.json({ error: "TMDB_READ_ACCESS_TOKEN is not configured" });
+	}
+
+	const url = new URL(`/3${path}`, TMDB_BASE_URL);
+	url.searchParams.set("language", "en-US");
+	for (const [key, value] of Object.entries(params)) {
+		if (value !== undefined && value !== "") {
+			url.searchParams.set(key, value);
+		}
+	}
+
+	try {
+		const tmdbRes = await fetch(url, {
+			headers: {
+				Authorization: `Bearer ${TMDB_READ_ACCESS_TOKEN}`,
+				Accept: "application/json",
+			},
+		});
+
+		const body = await tmdbRes.text();
+		res
+			.status(tmdbRes.status)
+			.type(tmdbRes.headers.get("content-type") ?? "application/json")
+			.send(body);
+	} catch (error) {
+		console.error("TMDB proxy error:", error);
+		res.status(502).json({ error: "Failed to reach TMDB" });
+	}
+}
+
+/////////////////////////////////////////////////////
 // Endpoints
 /////////////////////////////////////////////////////
 app.get("/health", (req, res) => {
 	res.json({ status: "ok" });
 });
 
-// TODO: All endpoints
+// Movies
+app.get("/movies/popular", (req, res) => {
+	proxyTmdb(res, "/movie/popular", { page: req.query.page });
+});
 
+app.get("/movies/search", (req, res) => {
+	const { query } = req.query;
+	if (!query) {
+		return res.status(400).json({ error: "Query is required" });
+	}
+	proxyTmdb(res, "/search/movie", { query, page: req.query.page });
+});
+
+app.get("/movies/:id", (req, res) => {
+	proxyTmdb(res, `/movie/${encodeURIComponent(req.params.id)}`);
+});
+
+// Series
+app.get("/tv/popular", (req, res) => {
+	proxyTmdb(res, "/tv/popular", { page: req.query.page });
+});
+
+app.get("/tv/search", (req, res) => {
+	const { query } = req.query;
+	if (!query) {
+		return res.status(400).json({ error: "Query is required" });
+	}
+	proxyTmdb(res, "/search/tv", { query, page: req.query.page });
+});
+
+app.get("/tv/:id", (req, res) => {
+	proxyTmdb(res, `/tv/${encodeURIComponent(req.params.id)}`);
+});
+
+// Export
 export default app;
