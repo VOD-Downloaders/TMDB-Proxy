@@ -1,12 +1,13 @@
 # TMDB Proxy
 
 A lightweight node app to proxy the [TMDB API](https://developer.themoviedb.org/). This app is designed as to not expose your **API Key**.
+Any request is forwarded to TMDB using the same path and query string, with your API Read Access Token injected server-side.
 
 ## Features
 
-- Search movies and tv shows
+- Proxies the **entire** TMDB read API
 - Easy **Vercel** deployment
-- Secure **API Key** storage
+- Your **API Keys** stay secure (server-side)
 
 ## Getting Started
 
@@ -33,7 +34,7 @@ A lightweight node app to proxy the [TMDB API](https://developer.themoviedb.org/
 4. Add your **API Keys** to the file:
     ```sh
     TMDB_API_KEY=<APIKEY>
-    TMDB_READ_ACCESS_TOKEN=<APIKEY>
+    TMDB_READ_ACCESS_TOKEN=<READ_ACCESS_TOKEN>
     ```
 
 5. Run:
