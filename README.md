@@ -33,7 +33,6 @@ Any request is forwarded to TMDB using the same path and query string, with your
 
 4. Add your **API Keys** to the file:
     ```sh
-    TMDB_API_KEY=<APIKEY>
     TMDB_READ_ACCESS_TOKEN=<READ_ACCESS_TOKEN>
     ```
 
@@ -49,7 +48,6 @@ Any request is forwarded to TMDB using the same path and query string, with your
 2. Import the github repository in [Vercel](https://vercel.com/).
 
 3. Add the environment variables:
-    - `TMDB_API_KEY`
     - `TMDB_READ_ACCESS_TOKEN`  
     under **Vercel** -> **Settings** -> **Environment Variables**
 
