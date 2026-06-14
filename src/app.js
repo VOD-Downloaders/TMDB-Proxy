@@ -75,6 +75,10 @@ app.get("/movies/:id", (req, res) => {
 	proxyTmdb(res, `/movie/${encodeURIComponent(req.params.id)}`);
 });
 
+app.get("/movies/:id/external_ids", (req, res) => {
+	proxyTmdb(res, `/movie/${encodeURIComponent(req.params.id)}/external_ids`);
+});
+
 // Series
 app.get("/tv/popular", (req, res) => {
 	proxyTmdb(res, "/tv/popular", { page: req.query.page });
@@ -90,6 +94,50 @@ app.get("/tv/search", (req, res) => {
 
 app.get("/tv/:id", (req, res) => {
 	proxyTmdb(res, `/tv/${encodeURIComponent(req.params.id)}`);
+});
+
+app.get("/tv/:id/external_ids", (req, res) => {
+	proxyTmdb(res, `/tv/${encodeURIComponent(req.params.id)}/external_ids`);
+});
+
+// Seasons
+app.get("/tv/:id/season/:season", (req, res) => {
+	const { id, season } = req.params;
+	proxyTmdb(
+		res,
+		`/tv/${encodeURIComponent(id)}/season/${encodeURIComponent(season)}`,
+	);
+});
+
+app.get("/tv/:id/season/:season/external_ids", (req, res) => {
+	const { id, season } = req.params;
+	proxyTmdb(
+		res,
+		`/tv/${encodeURIComponent(id)}/season/${encodeURIComponent(
+			season,
+		)}/external_ids`,
+	);
+});
+
+// Episodes
+app.get("/tv/:id/season/:season/episode/:episode", (req, res) => {
+	const { id, season, episode } = req.params;
+	proxyTmdb(
+		res,
+		`/tv/${encodeURIComponent(id)}/season/${encodeURIComponent(
+			season,
+		)}/episode/${encodeURIComponent(episode)}`,
+	);
+});
+
+app.get("/tv/:id/season/:season/episode/:episode/external_ids", (req, res) => {
+	const { id, season, episode } = req.params;
+	proxyTmdb(
+		res,
+		`/tv/${encodeURIComponent(id)}/season/${encodeURIComponent(
+			season,
+		)}/episode/${encodeURIComponent(episode)}/external_ids`,
+	);
 });
 
 // Export

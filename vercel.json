@@ -4,8 +4,14 @@
     { "source": "/movies/popular", "destination": "/api" },
     { "source": "/movies/search", "destination": "/api" },
     { "source": "/movies/:id", "destination": "/api" },
+    { "source": "/movies/:id/external_ids", "destination": "/api" },
     { "source": "/tv/popular", "destination": "/api" },
     { "source": "/tv/search", "destination": "/api" },
-    { "source": "/tv/:id", "destination": "/api" }
+    { "source": "/tv/:id", "destination": "/api" },
+    { "source": "/tv/:id/external_ids", "destination": "/api" },
+    { "source": "/tv/:id/season/:season", "destination": "/api" },
+    { "source": "/tv/:id/season/:season/external_ids", "destination": "/api" },
+    { "source": "/tv/:id/season/:season/episode/:episode", "destination": "/api" },
+    { "source": "/tv/:id/season/:season/episode/:episode/external_ids", "destination": "/api" }
   ]
 }
