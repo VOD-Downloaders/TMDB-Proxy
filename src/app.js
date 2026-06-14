@@ -58,12 +58,8 @@ app.get("/health", (req, res) => {
 	res.json({ status: "ok" });
 });
 
-// Movies
-app.get("/movies/popular", (req, res) => {
-	proxyTmdb(res, "/movie/popular", { page: req.query.page });
-});
-
-app.get("/movies/search", (req, res) => {
+// Search
+app.get("/search/movie", (req, res) => {
 	const { query } = req.query;
 	if (!query) {
 		return res.status(400).json({ error: "Query is required" });
@@ -71,25 +67,30 @@ app.get("/movies/search", (req, res) => {
 	proxyTmdb(res, "/search/movie", { query, page: req.query.page });
 });
 
-app.get("/movies/:id", (req, res) => {
+app.get("/search/tv", (req, res) => {
+	const { query } = req.query;
+	if (!query) {
+		return res.status(400).json({ error: "Query is required" });
+	}
+	proxyTmdb(res, "/search/tv", { query, page: req.query.page });
+});
+
+// Movies
+app.get("/movie/popular", (req, res) => {
+	proxyTmdb(res, "/movie/popular", { page: req.query.page });
+});
+
+app.get("/movie/:id", (req, res) => {
 	proxyTmdb(res, `/movie/${encodeURIComponent(req.params.id)}`);
 });
 
-app.get("/movies/:id/external_ids", (req, res) => {
+app.get("/movie/:id/external_ids", (req, res) => {
 	proxyTmdb(res, `/movie/${encodeURIComponent(req.params.id)}/external_ids`);
 });
 
 // Series
 app.get("/tv/popular", (req, res) => {
 	proxyTmdb(res, "/tv/popular", { page: req.query.page });
-});
-
-app.get("/tv/search", (req, res) => {
-	const { query } = req.query;
-	if (!query) {
-		return res.status(400).json({ error: "Query is required" });
-	}
-	proxyTmdb(res, "/search/tv", { query, page: req.query.page });
 });
 
 app.get("/tv/:id", (req, res) => {
